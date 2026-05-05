@@ -74,7 +74,9 @@ A working, validated reduced-order Case 5 reactor model that preserves the react
 
 Each case was simulated to obtain the infinite multiplication factor *k*-infinity (from the Monte Carlo "combined k-effective" output), the salt's melting point (from literature), and the moderator density coefficient (change in reactivity per 1 % density change, in pcm / %). The following equation was used to calculate moderator density coefficients:
 
-$$\rho_{+1\%} = \frac{K_{+1\%} - 1}{K_{+1\%}}, \quad \rho_{-1\%} = \frac{K_{-1\%} - 1}{K_{-1\%}}, \quad \alpha_{\rho} = \frac{\rho_{+1\%} - \rho_{-1\%}}{2\%} \times 10^{5}$$
+$$\rho_{+1} = \frac{K_{+1} - 1}{K_{+1}}, \quad \rho_{-1} = \frac{K_{-1} - 1}{K_{-1}}, \quad \alpha_{\rho} = \frac{\rho_{+1} - \rho_{-1}}{0.02} \times 10^{5}$$
+
+where the $+1$ and $-1$ subscripts denote the $+1\,\%$ and $-1\,\%$ moderator-density perturbation cases, and the $0.02$ in the denominator represents the $2\,\%$ total density swing.
 
 All four cases used identical Monte Carlo parameters: 100 total batches (generations) with 25 inactive (for initialization) and 75 active cycles, and 2 000 particles per batch. Below we present the verified metrics for each salt case and compare them to the original report values, noting any discrepancies. Overall results are shown below:
 
