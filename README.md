@@ -30,6 +30,43 @@
 
 ---
 
+## Overview
+
+This project is a high-fidelity neutronics study of a graphite-moderated, molten-salt-cooled reactor core fueled with TRISO compacts, conducted as the capstone for MIT 22.211 (Nuclear Reactor Physics I). The work spans coolant-salt selection, reactivity-feedback characterization, geometric sensitivity studies, moderator substitution, control-mechanism design, and — most substantially — the construction of an **equivalent reduced-order model** (Case 5) that preserves the reactivity profile of the doubly-heterogeneous TRISO lattice across full irradiation history at a fraction of the computational cost.
+
+### Goals
+
+- Quantify *k*-infinity, melting points, and moderator-density coefficients across four candidate coolant salts (NaF–ZrF₄ and three Li-7 enrichments of FLiBe).
+- Resolve fuel, coolant, and moderator temperature coefficients, axial leakage, region-wise heat deposition, and the equivalent-boron worth of graphite impurities for the reference NaF–ZrF₄ core.
+- Map the reactivity and Doppler response across the realistic TRISO packing-fraction window, and identify the fabrication ceiling.
+- Evaluate H₂O as a drop-in moderator and enumerate the redesign that would be required to make it work.
+- Propose a control-rod / liquid-zone hybrid reactivity-control scheme suited to the salt environment.
+- Quantify the homogenization penalty in reactivity, U-235 fission rate, and U-238 capture rate across a 254-step depletion.
+- Develop and validate a homogenized-equivalent compact (RPT) and a semi-homogeneous **Ring RPT (RRPT)** model that match the heterogeneous benchmark over life.
+- Cross-validate the RRPT geometry in CASMO against continuous-energy OpenMC.
+
+### Methods
+
+- **Continuous-energy Monte Carlo** in OpenMC (100 batches, 25 inactive, 2 000 particles/batch baseline) for all eigenvalue and tally work, with depletion runs extended to 254 steps for burnup studies.
+- **Two-group deterministic transport** in CASMO for the RRPT benchmarking, providing a memory- and runtime-favorable comparison point.
+- **Reactivity-Equivalent Physical Transformation (RPT)** — full compact homogenization with compact-radius tuning to recover BOL reactivity.
+- **Ring RPT (RRPT)** — concentric fuel/graphite-ring decomposition with parameterized inner-fuel and middle-graphite allocations, swept across 50/50, 70/30, 30/70, and ultimately 1/99 fuel splits paired with 33/33/33 and 10/80/10 (and finally 1/98/1) graphite layouts.
+- **Standard error propagation** applied to all derived reactivity coefficients and pcm-scale comparisons; statistical significance reported alongside every coefficient.
+
+### Key Accomplishments
+
+- Reproduced and validated the full Case 1–4 salt comparison, recovering the diminishing-returns behavior of Li-7 enrichment and the sign flip of the moderator-density coefficient between natural and enriched Li FLiBe.
+- Identified the 30–40 % packing-fraction sweet spot and explained the drop-off above ~45 % in terms of self-shielding and spectrum hardening.
+- Established that fully homogenized TRISO compacts under-predict reactivity by ≈ 3 900 pcm at BOL and ≈ 5 350 pcm at EOL — a burnup-dependent, physically systematic bias rather than statistical noise.
+- Demonstrated that an **RRPT compact with 1/99 fuel split and 1/98/1 graphite split** brings reactivity within ~200 pcm of the heterogeneous benchmark at end-of-life while staying within ~1 500 pcm through mid-burn.
+- Showed the RRPT model delivers an **~87.6 % runtime reduction (767 s → 95 s)** and a **~55× memory reduction (346 MB → 6 MB)** versus the explicit heterogeneous simulation, with CASMO independently confirming the +23 000 pcm reactivity recovery from restoring radial heterogeneity.
+
+### Outcome
+
+A working, validated reduced-order Case 5 reactor model that preserves the reactivity-equivalent physics of a doubly-heterogeneous TRISO compact across irradiation history while collapsing the computational cost by roughly two orders of magnitude — making downstream parametric sweeps, optimization, and uncertainty quantification tractable on commodity hardware.
+
+---
+
 <a id="problem-1"></a>
 ## Problem 1
 
